@@ -2,6 +2,7 @@ package com.github.jarada.waygates.data;
 
 import com.github.jarada.waygates.WaygateManager;
 import com.github.jarada.waygates.PluginMain;
+import com.github.jarada.waygates.types.EnchantmentType;
 import com.github.jarada.waygates.types.MenuSize;
 import com.github.jarada.waygates.util.Util;
 import com.google.common.base.Charsets;
@@ -57,6 +58,7 @@ public class DataManager {
     public int                          WG_NETWORK_NAME_MAX_LENGTH;
     public int                          WG_CONTROLLER_DISTANCE;
     public int                          WG_GATE_ACTIVATION_TIME;
+    public boolean                      WG_GATE_DEFAULT_ALWAYS_ON;
     public GateActivationParticles      WG_GATE_EFFECT_PARTICLES;
     public int                          WG_GATE_MINIMAL_DISTANCE;
     public boolean                      WG_GATE_ICON_CHANGE_CONSUMES;
@@ -109,6 +111,7 @@ public class DataManager {
         WG_NETWORK_NAME_MAX_LENGTH = Integer.max(6, config.getInt("Waygates.WG_NETWORK_NAME_MAX_LENGTH"));
         WG_CONTROLLER_DISTANCE = Integer.min(50, Integer.max(1, config.getInt("Waygates.WG_CONTROLLER_DISTANCE")));
         WG_GATE_ACTIVATION_TIME = Integer.min(300, Integer.max(5, config.getInt("Waygates.WG_GATE_ACTIVATION_TIME")));
+        WG_GATE_DEFAULT_ALWAYS_ON = config.getBoolean("Waygates.WG_GATE_DEFAULT_ALWAYS_ON");
         WG_GATE_MINIMAL_DISTANCE = Integer.min(50, Integer.max(1, config.getInt("Waygates.WG_GATE_MINIMAL_DISTANCE")));
         WG_GATE_ICON_CHANGE_CONSUMES = config.getBoolean("Waygates.WG_GATE_ICON_CHANGE_CONSUMES");
         WG_CONTROL_CREATOR_CONSUMES = config.getBoolean("Waygates.WG_CONTROL_CREATOR_CONSUMES");
@@ -168,7 +171,7 @@ public class DataManager {
                 Msg.LORE_CONSTRUCTOR_NAME.toString(), lore);
             ItemMeta activatorMeta = WAYGATE_CONSTRUCTOR.getItemMeta();
             if (activatorMeta != null) {
-                activatorMeta.addEnchant(Enchantment.LUCK_OF_THE_SEA, 1, true);
+                activatorMeta.addEnchant(EnchantmentType.LUCK.get(), 1, true);
                 activatorMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 WAYGATE_CONSTRUCTOR.setItemMeta(activatorMeta);
             }
@@ -190,7 +193,7 @@ public class DataManager {
                     Msg.LORE_KEY_NAME.toString(), lore);
             ItemMeta keyMeta = WAYGATE_KEY.getItemMeta();
             if (keyMeta != null) {
-                keyMeta.addEnchant(Enchantment.LUCK_OF_THE_SEA, 1, true);
+                keyMeta.addEnchant(EnchantmentType.LUCK.get(), 1, true);
                 keyMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 WAYGATE_KEY.setItemMeta(keyMeta);
             }
@@ -212,7 +215,7 @@ public class DataManager {
                     Msg.LORE_CONTROL_NAME.toString(), lore);
             ItemMeta controlMeta = WAYGATE_CONTROL.getItemMeta();
             if (controlMeta != null) {
-                controlMeta.addEnchant(Enchantment.LUCK_OF_THE_SEA, 1, true);
+                controlMeta.addEnchant(EnchantmentType.LUCK.get(), 1, true);
                 controlMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 WAYGATE_CONTROL.setItemMeta(controlMeta);
             }
@@ -244,7 +247,7 @@ public class DataManager {
                 Msg.LORE_KEY_LOCK_NAME.toString(gate.getName()), lore);
         ItemMeta keyMeta = lock.getItemMeta();
         if (keyMeta != null) {
-            keyMeta.addEnchant(Enchantment.LUCK_OF_THE_SEA, 1, true);
+            keyMeta.addEnchant(EnchantmentType.LUCK.get(), 1, true);
             keyMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             lock.setItemMeta(keyMeta);
         }

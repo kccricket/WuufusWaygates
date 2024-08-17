@@ -4,6 +4,7 @@ import com.github.jarada.waygates.data.*;
 import com.github.jarada.waygates.types.GateCreationResult;
 import com.github.jarada.waygates.types.GateMaxIndicator;
 import com.github.jarada.waygates.types.GateOrientation;
+import com.github.jarada.waygates.types.ParticleType;
 import com.github.jarada.waygates.util.FloodUtil;
 import com.github.jarada.waygates.util.GateUtil;
 import com.github.jarada.waygates.util.MaterialCountUtil;
@@ -482,7 +483,8 @@ public class WaygateManager {
         if (gate != null)
             imprint = true;
         else
-            gate = new Gate(p.getUniqueId(), coords, new BlockLocation(startBlock.getLocation()), exit);
+            gate = new Gate(p.getUniqueId(), coords, new BlockLocation(startBlock.getLocation()), exit,
+                    DataManager.getManager().WG_GATE_DEFAULT_ALWAYS_ON);
         gate.deactivate();
 
         // Record Gate
@@ -702,7 +704,7 @@ public class WaygateManager {
     /* Shared FX */
 
     private void createEffect(Block startBlock) {
-        Util.playParticle(startBlock.getLocation(), Particle.DUST, 10);
+        Util.playParticle(startBlock.getLocation(), ParticleType.REDSTONE.get(), 10);
         Util.playEffect(startBlock.getLocation(), Effect.ENDER_SIGNAL);
         Util.playSound(startBlock.getLocation(), Sound.BLOCK_BEACON_ACTIVATE);
         // NB Add Gate Creation Sound FX (CG Stored in UGate)
@@ -710,8 +712,8 @@ public class WaygateManager {
 
     private void destroyEffect(BlockLocation destroyingBlock) {
         Util.playEffect(destroyingBlock.getLocation(), Effect.ENDER_SIGNAL);
-        Util.playParticle(destroyingBlock.getLocation(), Particle.EXPLOSION, 1);
-        Util.playParticle(destroyingBlock.getLocation(), Particle.DUST, 10);
+        Util.playParticle(destroyingBlock.getLocation(), ParticleType.EXPLOSION.get(), 1);
+        Util.playParticle(destroyingBlock.getLocation(), ParticleType.REDSTONE.get(), 10);
         Util.playSound(destroyingBlock.getLocation(), Sound.ENTITY_GENERIC_EXPLODE);
         Util.playSound(destroyingBlock.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE);
     }
